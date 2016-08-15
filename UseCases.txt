@@ -1,0 +1,69 @@
+User Scenarios
+	0. User
+			# I must be able to login with valid credentials
+	1. Faculty
+		Use Cases
+			# I must be able to see my lectures
+			# I must be able to mark attendance of lectures
+			# I must be able to edit the attendance
+			# I should be able to get the total of attendance, with percentage
+			# I should be able to get a list of students with high attendance - marked green
+			# I should be able to get a list of students with short attendance - marked red
+			# It would be good to have a feature to mail the students on their email ids.
+			# more to come from you...
+	2. HOD/Director
+		Use Cases
+			# I must be able to add new faculties
+			# I must be able to remove a faculty
+			# I should be able to a get a list of faculties based on their departments
+			# I must be able to check the attendance marked by faculty
+			# It would be good to have a feature to get attendance by departments
+			# I should be able to add the timetable
+			# I must be able to view the timetable
+			# It would be good to have an option to update the timetable
+			# more to come from you...
+	3. Admission Cell
+		Use Cases
+			# I must be able to see a list of all the student admissions by year
+			# I should be able to filter the admissions based on department
+			# I should be able to update student record
+			# more to come from you...
+	4. Accounts
+		Use Cases
+			# I must be able to see the fee details (total,submitted,pending) of students by department
+			# I should be able to edit the fee details (total,submitted,pending) of students
+			# more to come from you...
+	5. Transport
+		Use Cases
+			# I must be able to get a list of students availing the transport facility
+			# I should be able to filter students based on transport route
+			# I should be able to see the details of each transport route
+			# I should be able to add a transport route
+			# It would be good to have an option to edit a transport route
+			# more to come from you...
+	6. Training & Placement
+		Use Cases
+			# I must be able to get a list of former students placed by the organisation
+			# I should be able to add students in the list
+			# I should be able to filter the results by year
+			# more to come from you...
+	7. SuperUser
+		Use Cases
+			# I must be able to get a list of HODs
+			# I should be able to add a HOD
+			# I should be able to remove a HOD
+			# I must be able to get a list of faculties
+			# I must be able to get a list of admission personnels
+			# I should be able to add an admission personnel
+			# I should be able to remove an admission personnel
+			# I must be able to get a list of account members
+			# I should be able to add an account member
+			# I should be able to remove an account member
+			# I must be able to get a list of transport incharges
+			# I should be able to add a transport incharge
+			# I should be able to remove a transport incharge
+			# I must be able to get a list of T&P personnels
+			# I should be able to add a T&P personnel
+			# I should be able to remove a T&P personnel
+			# more to come from you...
+	
