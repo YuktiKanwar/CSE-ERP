@@ -11,6 +11,9 @@ User Scenarios
 			# I should be able to get a list of students with short attendance - marked red
 			# It would be good to have a feature to mail the students on their email ids.
 			# more to come from you...
+        -Yukti  # I should be able to add my desired subject notes in my account.
+			# I should be able to view and delete the desired notes.
+                        
 	2. HOD/Director
 		Use Cases
 			# I must be able to add new faculties
@@ -32,7 +35,11 @@ User Scenarios
 		Use Cases
 			# I must be able to see the fee details (total,submitted,pending) of students by department
 			# I should be able to edit the fee details (total,submitted,pending) of students
-			# more to come from you...
+			# more to come from you...	
+         -Yukti
+            # I should be able to see the list of students who got scholarships.
+            # I should be able to see the fines of students due to late submission of fee.
+			
 	5. Transport
 		Use Cases
 			# I must be able to get a list of students availing the transport facility
@@ -41,13 +48,29 @@ User Scenarios
 			# I should be able to add a transport route
 			# It would be good to have an option to edit a transport route
 			# more to come from you...
+                    -Yukti
+                        #I must be able to get a list of faculties too availing the transport facility.
+			
 	6. Training & Placement
 		Use Cases
 			# I must be able to get a list of former students placed by the organisation
 			# I should be able to add students in the list
 			# I should be able to filter the results by year
-			# more to come from you...
-	7. SuperUser
+			# more to come from you.
+		-Yukti
+      		# I should be able to get the list of non-placed and placed students.
+			#
+
+
+          -Yukti
+        7. Library
+        	Use Cases
+               #I must be able to get the list of students who issued books.
+               #I should be able to see the details of students who did not return the books on time.
+               #I must be able to get the list of students who lost their ids.
+		       #I should be able to update books.
+
+	8. SuperUser
 		Use Cases
 			# I must be able to get a list of HODs
 			# I should be able to add a HOD
@@ -66,4 +89,11 @@ User Scenarios
 			# I should be able to add a T&P personnel
 			# I should be able to remove a T&P personnel
 			# more to come from you...
+		-Yukti
+			# I should be able to get the list of librarians.
+			# I should be able to add a librarian.
+			# I should be able to remove a librarian.
+
+                            
 	
+
