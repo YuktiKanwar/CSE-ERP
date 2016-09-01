@@ -1,7 +1,7 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<h3>Only the admin(Mrs Thakur) will be able to see this page</h3>
+<h3>Only the admin will be able to see this page</h3>
 <ul>
-	<li>Not any user like Mr Thakur</li>
+	<li>Not any other user</li>
 </ul>
 
 <c:url value="/logout" var="logoutUrl" />

@@ -1,7 +1,6 @@
 package spring.security.config.core;
 
 import org.springframework.web.servlet.support.AbstractAnnotationConfigDispatcherServletInitializer;
-
 import spring.security.config.LoginApplicationConfig;
 
 public class SpringMVCWebAppInitializer extends AbstractAnnotationConfigDispatcherServletInitializer {
