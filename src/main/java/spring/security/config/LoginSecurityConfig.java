@@ -22,30 +22,70 @@ public class LoginSecurityConfig extends WebSecurityConfigurerAdapter {
 	
 	@Autowired
 	public void configureGlobal(AuthenticationManagerBuilder authenticationMgr) throws Exception {
+		authenticationMgr.inMemoryAuthentication()
+		.withUser("root")
+		.password("root")
+		.authorities("ROLE_SUPER");
 		authenticationMgr.userDetailsService(userDetailsService);
 //		authenticationMgr.inMemoryAuthentication()
 //			.withUser("yukti")
 //			.password("lagnesh")
 //			.authorities("ROLE_ADMIN");
-//		authenticationMgr.inMemoryAuthentication()
-//		.withUser("lagnesh")
-//		.password("yukti")
-//		.authorities("ROLE_USER");
 	}
 	
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
 		http.authorizeRequests()
-			.antMatchers("/homePage").access("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')")
+			.antMatchers("/homePage").permitAll()
 			.and()
-				.formLogin().loginPage("/loginPage")
+				.formLogin().loginPage("/")
 				.defaultSuccessUrl("/homePage")
-				.failureUrl("/loginPage?error")
+				.failureUrl("/?error")
 				.usernameParameter("username").passwordParameter("password")				
 			.and()
-				.logout().logoutSuccessUrl("/loginPage?logout"); 
+				.logout().logoutSuccessUrl("/?logout")
+			.and()
+			.exceptionHandling().accessDeniedPage("/403");
+		
 		http.authorizeRequests()
-		.antMatchers("/newPage").access("hasRole('ROLE_ADMIN')");
+		.antMatchers("/Accounts/*").access("hasRole('ROLE_ACCOUNTS')")
+		.and()
+		.exceptionHandling().accessDeniedPage("/403");
+		
+		http.authorizeRequests()
+		.antMatchers("/Admission/*").access("hasRole('ROLE_ADMISSION')")
+		.and()
+		.exceptionHandling().accessDeniedPage("/403");
+	
+		http.authorizeRequests()
+		.antMatchers("/Faculty/*").access("hasRole('ROLE_FACULTY')")
+		.and()
+		.exceptionHandling().accessDeniedPage("/403");
+		
+		http.authorizeRequests()
+		.antMatchers("/HOD/*").access("hasRole('ROLE_HOD')")
+		.and()
+		.exceptionHandling().accessDeniedPage("/403");
+		
+		http.authorizeRequests()
+		.antMatchers("/Library/*").access("hasRole('ROLE_LIBRARY')")
+		.and()
+		.exceptionHandling().accessDeniedPage("/403");
+		
+		http.authorizeRequests()
+		.antMatchers("/T&P/*").access("hasRole('ROLE_T&P')")
+		.and()
+		.exceptionHandling().accessDeniedPage("/403");
+		
+		http.authorizeRequests()
+		.antMatchers("/Transport/*").access("hasRole('ROLE_TRANSPORT')")
+		.and()
+		.exceptionHandling().accessDeniedPage("/403");
+		
+		http.authorizeRequests()
+		.antMatchers("/User/*").access("hasRole('ROLE_SUPER')")
+		.and()
+		.exceptionHandling().accessDeniedPage("/403");
 		
 	}
 	@Bean

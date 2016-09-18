@@ -1,0 +1,25 @@
+.navbar{
+	background-color: rgb(104, 78, 48);	
+}
+
+.navbar a{
+	color: white;
+}
+
+.btn-success{
+	background-color: rgb(174, 146, 113) !important;
+	border-color: rgb(174, 146, 113) !important;
+}
+
+img.logo{
+	width: 50%;
+}
+
+ul.nav li a:hover{
+	background-color: rgb(174, 146, 113);
+	color:white;
+}
+
+img.img-responsive{
+	height: 300px !important;
+}

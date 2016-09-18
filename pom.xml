@@ -190,10 +190,16 @@
 	        <artifactId>hibernate-jpa-2.0-api</artifactId>
 	        <version>1.0.1.Final</version>
     	</dependency>
+    	<!--  SiteMesh -->
+    	<dependency>
+		    <groupId>org.sitemesh</groupId>
+		    <artifactId>sitemesh</artifactId>
+		    <version>3.0-alpha-2</version>
+		</dependency>
 	</dependencies>	
 
 	<build>
-	    <finalName>SpringMVCSecruityMavenApp</finalName>
+	    <finalName>ERPApp</finalName>
 	    <plugins>
 		<plugin>
 		     <groupId>org.apache.maven.plugins</groupId>

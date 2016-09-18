@@ -11,6 +11,8 @@ import org.springframework.orm.hibernate4.HibernateTransactionManager;
 import org.springframework.orm.hibernate4.LocalSessionFactoryBuilder;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
+import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
 import org.springframework.web.servlet.view.JstlView;
 
@@ -19,7 +21,7 @@ import org.springframework.web.servlet.view.JstlView;
 @ComponentScan({ "spring.*" })
 @EnableTransactionManagement
 @Import(value = { LoginSecurityConfig.class })
-public class LoginApplicationConfig {
+public class LoginApplicationConfig extends WebMvcConfigurerAdapter{
 	
 	@Bean
     public SessionFactory sessionFactory() {
@@ -65,6 +67,11 @@ public class LoginApplicationConfig {
 		viewResolver.setPrefix("/WEB-INF/views/");
 		viewResolver.setSuffix(".jsp");
 		return viewResolver;
+	}
+	//Resource handler
+	@Override
+	public void addResourceHandlers(final ResourceHandlerRegistry registry) {
+	    registry.addResourceHandler("/resources/**").addResourceLocations("/WEB-INF/resources/");
 	}
 	
 }

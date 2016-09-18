@@ -3,12 +3,9 @@ package spring.web.controller;
 
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-
-import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -18,7 +15,6 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import spring.model.User;
@@ -38,13 +34,13 @@ public class UserController{
 	@Qualifier("userRoleService")
 	UserRoleService userRoleService;
 	
-	@RequestMapping(value = { "/welcome2"}, method = RequestMethod.GET)
+	@RequestMapping(value = { "/index"}, method = RequestMethod.GET)
 	public ModelAndView welcomePage() {
 		ModelAndView model = new ModelAndView();
-		model.setViewName("welcomePage");
+		model.setViewName("superuser/index");
 		return model;
 	}
-	
+
 	//List Users
 	@RequestMapping(value = "/users", method = RequestMethod.GET)
 	public String listUsers(Model model) {
@@ -61,7 +57,7 @@ public class UserController{
 		}
 		model.addAttribute("listUsers", listUsers);
 		model.addAttribute("userRoles",userRolesSet);
-		return "user";
+		return "superuser/user";
 	}
 	
 	//For adding a user
@@ -118,7 +114,7 @@ public class UserController{
 		}
 		model.addAttribute("listUsers", listUsers);
 		model.addAttribute("userRoles",userRolesSet);
-        return "user_update";
+        return "superuser/user_update";
     }
 	
 	@ModelAttribute("rolesList") 
@@ -126,10 +122,12 @@ public class UserController{
 		 
 
 		Map<String,String> roles = new HashMap<String,String>();
-		roles.put("ROLE_USER", "ROLE_USER");
-		roles.put("ROLE_HOD", "ROLE_HOD");
+		roles.put("ROLE_ACCOUNTS", "ROLE_ACCOUNTS");
+		roles.put("ROLE_ADMISSION", "ROLE_ADMISSION");
 		roles.put("ROLE_FACULTY", "ROLE_FACULTY");
-		roles.put("ROLE_ADMIN", "ROLE_ADMIN");
+		roles.put("ROLE_HOD", "ROLE_HOD");
+		roles.put("ROLE_LIBRARY", "ROLE_LIBRARY");
+		roles.put("ROLE_T&P", "ROLE_T&P");
 		roles.put("ROLE_TRANSPORT", "ROLE_TRANSPORT");
 		return roles;
 

@@ -1,5 +1,7 @@
 package spring.web.controller;
 
+import java.security.Principal;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -10,8 +12,16 @@ import org.springframework.web.servlet.ModelAndView;
 public class LoginController {
 
 	@RequestMapping(value = { "/"}, method = RequestMethod.GET)
-	public ModelAndView welcomePage() {
+	public ModelAndView welcomePage(@RequestParam(value = "error",required = false) String error,
+			@RequestParam(value = "logout",	required = false) String logout) {
 		ModelAndView model = new ModelAndView();
+		if (error != null) {
+			model.addObject("error", "Invalid Credentials provided.");
+		}
+
+		if (logout != null) {
+			model.addObject("message", "Logged out from ERPApp successfully.");
+		}
 		model.setViewName("welcomePage");
 		return model;
 	}
@@ -23,28 +33,25 @@ public class LoginController {
 		return model;
 	}
 	
-	@RequestMapping(value = { "/newPage"}, method = RequestMethod.GET)
+	@RequestMapping(value = { "/adminPage"}, method = RequestMethod.GET)
 	public ModelAndView newPage() {
 		ModelAndView model = new ModelAndView();
-		model.setViewName("newPage");
+		model.setViewName("adminPage");
 		return model;
 	}
 	
-	@RequestMapping(value = "/loginPage", method = RequestMethod.GET)
-	public ModelAndView loginPage(@RequestParam(value = "error",required = false) String error,
-	@RequestParam(value = "logout",	required = false) String logout) {
+	@RequestMapping(value = { "/403"}, method = RequestMethod.GET)
+	public ModelAndView accessDeniedPage(Principal user) {
 		
 		ModelAndView model = new ModelAndView();
-		if (error != null) {
-			model.addObject("error", "Invalid Credentials provided.");
+		
+		if (user != null) {
+			model.addObject("msg",user.getName());
 		}
-
-		if (logout != null) {
-			model.addObject("message", "Logged out from JournalDEV successfully.");
-		}
-
-		model.setViewName("loginPage");
+		
+		model.setViewName("handlers/403");
 		return model;
 	}
+
 
 }
