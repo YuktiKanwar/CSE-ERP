@@ -5,7 +5,9 @@
  <sitemesh:write property='head'/>
  <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/css/layout.css">
  <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/css/bootstrap.css">
+ <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/css/jquery.dataTables.min.css">
  <script src="${pageContext.request.contextPath}/resources/js/jquery-3.1.0.min.js"></script>
+ <script src="${pageContext.request.contextPath}/resources/js/jquery.dataTables.min.js"></script>
  <script src="${pageContext.request.contextPath}/resources/js/bootstrap.js"></script>
  
  </head>

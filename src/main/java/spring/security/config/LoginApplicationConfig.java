@@ -39,6 +39,7 @@ public class LoginApplicationConfig extends WebMvcConfigurerAdapter{
         prop.put("hibernate.show_sql", "true");
         prop.put("hibernate.dialect",
             "org.hibernate.dialect.PostgreSQLDialect");
+        prop.put("hibernate.enable_lazy_load_no_trans", "true");
         return prop;
 	}
 

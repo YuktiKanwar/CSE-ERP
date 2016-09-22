@@ -49,7 +49,7 @@ public class UserDaoImpl implements UserDao {
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<User> listUsers() {
-		Session session = this.sessionFactory.openSession();
+		Session session = this.sessionFactory.getCurrentSession();
 		List<User> UsersList = session.createQuery("from User").list();
 		return UsersList;
 	}

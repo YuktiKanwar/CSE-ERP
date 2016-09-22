@@ -52,6 +52,10 @@ public class UserController{
 		for (int i = 0; i < listUsers.size(); i++) {
 			User listUser = listUsers.get(i);
 			userRoles = listUser.getUserRole();
+			for(UserRole u: userRoles) {
+			    UserRole waiu = u;
+			    break;
+			}
 			userRolesSet.put(String.valueOf(i), userRoles);
 			
 		}
