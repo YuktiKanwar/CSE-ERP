@@ -42,6 +42,12 @@ public class UserCRUDServiceImpl implements UserCRUDService {
 	public User getUserByUserName(String username) {
 		return this.userDao.findByUserName(username);
 	}
+	
+	@Override
+	@Transactional
+	public User getUserById(int id) {
+		return this.userDao.getUserById(id);
+	}
 
 	@Override
 	@Transactional

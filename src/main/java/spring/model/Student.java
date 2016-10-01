@@ -1,15 +1,15 @@
 package spring.model;
 
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.Transient;
@@ -23,14 +23,15 @@ public class Student {
 	private String lastName;
 	private String rollNo;
 	private int semester;
-	private String department;
+	private Department department;
 	private String email;
-//	private Set<UserRole> userRole = new HashSet<UserRole>(0);
+	@Transient
+	private int departmentId;
 
 	public Student() {
 	}
 
-	public Student(int id,String firstName, String lastName, String rollNo, int semester, String department, String email) {
+	public Student(int id,String firstName, String lastName, String rollNo, int semester, Department department, String email) {
 		this.id = id;
 		this.firstName = firstName;
 		this.lastName=lastName;
@@ -40,14 +41,6 @@ public class Student {
 		this.email= email;
 	}
 
-//	public User(int id,String username, String password,
-//		boolean enabled, Set<UserRole> userRole) {
-//		this.id = id;
-//		this.username = username;
-//		this.password = password;
-//		this.enabled = enabled;
-//		this.userRole = userRole;
-//	}
 
 	@Id
 	@SequenceGenerator(name="seq-gen",sequenceName="students_id_seq", initialValue=100)
@@ -99,13 +92,15 @@ public class Student {
 		public void setSemester(int semester) {
 			this.semester = semester;
 		}
-	@Column(name = "department", unique = true,
-			nullable = false, length = 45)
-		public String getDepartment() {
+		
+	
+	@ManyToOne(fetch= FetchType.LAZY)
+	@JoinColumn(name = "department_id", nullable = false)
+		public Department getDepartment() {
 			return this.department;
 		}
 
-		public void setDepartment(String department) {
+		public void setDepartment(Department department) {
 			this.department = department;
 		}
 	@Column(name = "email",
@@ -117,14 +112,15 @@ public class Student {
 		public void setEmail(String email) {
 			this.email = email;
 		}
-//	@OneToMany(fetch = FetchType.LAZY, mappedBy = "user")
-//	public Set<UserRole> getUserRole() {
-//		return this.userRole;
-//	}
-//
-//	public void setUserRole(Set<UserRole> userRole) {
-//		this.userRole = userRole;
-//	}
-//	
+	
+	public void setDepartmentId(int id) {
+		this.departmentId = id;
+	}
+	
+	@Transient
+	public int getDepartmentId() {
+		return this.departmentId;
+	}
+
 
 }

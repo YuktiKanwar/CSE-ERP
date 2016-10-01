@@ -5,7 +5,7 @@
 <%@ page import="java.util.*" %>
 <html>
 <head>
-	<title>User Page</title>
+	<title>Student Page</title>
 	<style>
 	.dataTables_filter {
 		display: none; 
@@ -58,11 +58,11 @@
 		      </div>
 		    </div>
 	        <div class="form-group">
-	        	<form:label class="control-label col-sm-2" path="department">
+	        	<form:label class="control-label col-sm-2" path="departmentId">
 					<spring:message text="Department:"/>
 				</form:label>
 		      <div class="col-sm-4">
-		        <form:select class="form-control" path="department" multiple="false">
+		        <form:select class="form-control" path="departmentId" multiple="false">
 				    <form:options items="${departmentList}"/>
 				</form:select>
 		      </div>
@@ -108,7 +108,7 @@
 				<td>${student.rollNo}</td>
 				<td>${student.email	}</td>
 				<td>${student.semester}</td>
-				<td>${student.department}</td>
+				<td>${student.department.name}</td>
 				<td><a href="<c:url value='edit/${student.id}' />" >Edit</a></td>
 				<td><a href="<c:url value='remove/${student.id}' />" >Delete</a></td>
 			</tr>

@@ -34,6 +34,73 @@ SET default_tablespace = '';
 SET default_with_oids = false;
 
 --
+-- Name: departments; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE departments (
+    id bigint NOT NULL,
+    name character varying(50)
+);
+
+
+ALTER TABLE departments OWNER TO postgres;
+
+--
+-- Name: departments_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE departments_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE departments_id_seq OWNER TO postgres;
+
+--
+-- Name: departments_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE departments_id_seq OWNED BY departments.id;
+
+
+--
+-- Name: lectures; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE lectures (
+    id bigint NOT NULL,
+    subject_id bigint,
+    user_id bigint
+);
+
+
+ALTER TABLE lectures OWNER TO postgres;
+
+--
+-- Name: lectures_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE lectures_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE lectures_id_seq OWNER TO postgres;
+
+--
+-- Name: lectures_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE lectures_id_seq OWNED BY lectures.id;
+
+
+--
 -- Name: students; Type: TABLE; Schema: public; Owner: postgres
 --
 
@@ -43,8 +110,8 @@ CREATE TABLE students (
     lastname character varying(50),
     roll_no character varying(50),
     semester integer,
-    department character varying(50),
-    email character varying(80)
+    email character varying(80),
+    department_id bigint
 );
 
 
@@ -69,6 +136,41 @@ ALTER TABLE students_id_seq OWNER TO postgres;
 --
 
 ALTER SEQUENCE students_id_seq OWNED BY students.id;
+
+
+--
+-- Name: subjects; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE subjects (
+    id bigint NOT NULL,
+    name character varying(50),
+    semester integer,
+    department_id integer
+);
+
+
+ALTER TABLE subjects OWNER TO postgres;
+
+--
+-- Name: subjects_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE subjects_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE subjects_id_seq OWNER TO postgres;
+
+--
+-- Name: subjects_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE subjects_id_seq OWNED BY subjects.id;
 
 
 --
@@ -144,7 +246,28 @@ ALTER SEQUENCE users_id_seq OWNED BY users.id;
 -- Name: id; Type: DEFAULT; Schema: public; Owner: postgres
 --
 
+ALTER TABLE ONLY departments ALTER COLUMN id SET DEFAULT nextval('departments_id_seq'::regclass);
+
+
+--
+-- Name: id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY lectures ALTER COLUMN id SET DEFAULT nextval('lectures_id_seq'::regclass);
+
+
+--
+-- Name: id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
 ALTER TABLE ONLY students ALTER COLUMN id SET DEFAULT nextval('students_id_seq'::regclass);
+
+
+--
+-- Name: id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY subjects ALTER COLUMN id SET DEFAULT nextval('subjects_id_seq'::regclass);
 
 
 --
@@ -162,15 +285,54 @@ ALTER TABLE ONLY users ALTER COLUMN id SET DEFAULT nextval('users_id_seq'::regcl
 
 
 --
+-- Data for Name: departments; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY departments (id, name) FROM stdin;
+1	CSE
+2	ECE
+3	ME
+4	MBA
+5	CIVIL
+\.
+
+
+--
+-- Name: departments_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('departments_id_seq', 5, true);
+
+
+--
+-- Data for Name: lectures; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY lectures (id, subject_id, user_id) FROM stdin;
+301	6	851
+302	1	901
+303	4	851
+304	2	851
+305	6	901
+306	7	901
+\.
+
+
+--
+-- Name: lectures_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('lectures_id_seq', 6, true);
+
+
+--
 -- Data for Name: students; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-COPY students (id, firstname, lastname, roll_no, semester, department, email) FROM stdin;
-50	Lagnesh	Thakur	13CSE22	7	CSE	\N
-51	Yukti	Kanwar	13CSE50	7	CSE	\N
-150	New	Student	13ME50	5	ME	\N
-100	Daman	Sharma	18ME45	1	CSE	\N
-300	User	withmail	13ME44	5	CIVIL	newuser@email.com
+COPY students (id, firstname, lastname, roll_no, semester, email, department_id) FROM stdin;
+1	Yukti	Kanwar	13CSE50	7	yukkanwar@gmail.com	1
+400	Lagnesh	Thakur	13CSE22	7	lagneshthakur@gmail.com	1
+401	Mistri	Launda	13ME44	6	mistri@master.com	3
 \.
 
 
@@ -178,7 +340,30 @@ COPY students (id, firstname, lastname, roll_no, semester, department, email) FR
 -- Name: students_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('students_id_seq', 6, true);
+SELECT pg_catalog.setval('students_id_seq', 8, true);
+
+
+--
+-- Data for Name: subjects; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY subjects (id, name, semester, department_id) FROM stdin;
+1	Chemistry(CSE)	1	1
+2	Chemistry(ECE)	1	2
+3	Chemistry(ME)	1	3
+4	ACA	7	1
+5	NN	7	1
+6	AJ	7	1
+7	DOS	7	1
+8	SPM	7	1
+\.
+
+
+--
+-- Name: subjects_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('subjects_id_seq', 1, false);
 
 
 --
@@ -239,6 +424,14 @@ SELECT pg_catalog.setval('users_id_seq', 20, true);
 
 
 --
+-- Name: department_pk; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY departments
+    ADD CONSTRAINT department_pk PRIMARY KEY (id);
+
+
+--
 -- Name: id_pk; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -247,11 +440,27 @@ ALTER TABLE ONLY users
 
 
 --
+-- Name: lecture_pk; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY lectures
+    ADD CONSTRAINT lecture_pk PRIMARY KEY (id);
+
+
+--
 -- Name: student_pk; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
 ALTER TABLE ONLY students
     ADD CONSTRAINT student_pk PRIMARY KEY (id);
+
+
+--
+-- Name: subjects_pk; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY subjects
+    ADD CONSTRAINT subjects_pk PRIMARY KEY (id);
 
 
 --
@@ -279,11 +488,43 @@ ALTER TABLE ONLY user_roles
 
 
 --
+-- Name: department_fk; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY students
+    ADD CONSTRAINT department_fk FOREIGN KEY (department_id) REFERENCES departments(id);
+
+
+--
+-- Name: department_fk; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY subjects
+    ADD CONSTRAINT department_fk FOREIGN KEY (department_id) REFERENCES departments(id);
+
+
+--
+-- Name: subject_fk; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY lectures
+    ADD CONSTRAINT subject_fk FOREIGN KEY (subject_id) REFERENCES subjects(id);
+
+
+--
 -- Name: user_id_fk; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
 ALTER TABLE ONLY user_roles
     ADD CONSTRAINT user_id_fk FOREIGN KEY (user_id) REFERENCES users(id);
+
+
+--
+-- Name: user_pk; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY lectures
+    ADD CONSTRAINT user_pk FOREIGN KEY (user_id) REFERENCES users(id);
 
 
 --
