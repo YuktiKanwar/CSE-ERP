@@ -14,16 +14,19 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import spring.model.Department;
 import spring.model.Lecture;
 import spring.model.Student;
 import spring.model.Subject;
+import spring.model.TimeTable;
 import spring.model.User;
 import spring.model.UserRole;
 import spring.service.StudentService;
 import spring.service.SubjectService;
+import spring.service.TimeTableService;
 import spring.service.UserCRUDService;
 import spring.service.DepartmentService;
 import spring.service.LectureService;
@@ -33,12 +36,8 @@ import spring.service.LectureService;
 public class HODController{
 	
 	@Autowired
-	@Qualifier("studentService")
-	StudentService studentService;
-	
-	@Autowired
-	@Qualifier("departmentService")
-	DepartmentService departmentService;
+	@Qualifier("timeTableService")
+	TimeTableService timeTableService;
 	
 	@Autowired
 	@Qualifier("lectureService")
@@ -58,17 +57,17 @@ public class HODController{
 		model.setViewName("hod/index");
 		return model;
 	}
-	
-	//For adding a student
-	@RequestMapping(value= "/addStudent", method = RequestMethod.POST)
-	public String addUser(@ModelAttribute("student") Student s){
+		
+	//For adding a timetable
+	@RequestMapping(value= "/addTimeTable", method = RequestMethod.POST)
+	public String addTimeTable(@ModelAttribute("timetable")  TimeTable tt){
 
-			Department d = departmentService.getDepartmentById(s.getDepartmentId());
-			s.setDepartment(d);
-			this.studentService.addStudent(s);
+			Lecture l = lectureService.getLectureById(tt.getLectureId());
+			tt.setLecture(l);
+			this.timeTableService.addTimeTable(tt);
 			
 		
-		return "redirect:/HOD/students";
+		return "redirect:/HOD/timetables";
 		
 	}
 	
@@ -86,25 +85,20 @@ public class HODController{
 		return "redirect:/HOD/lectures";
 		
 	}
-	
-		//List Students
-		@RequestMapping(value = "/students", method = RequestMethod.GET)
-		public String listUsers(Model model) {
-			model.addAttribute("student", new Student());
-			List<Student> listStudents = this.studentService.listStudents();
-			model.addAttribute("listStudents", listStudents);
-			return "hod/student";
-		}
 		
 		//List Lectures
 		@RequestMapping(value = "/lectures", method = RequestMethod.GET)
-		public String listLectures(Model model) {
+		public String listLectures(Model model, @RequestParam(value = "error",required = false) String error) {
+			if(error != null)
+			{
+				model.addAttribute("error", "This lecture is being used in timetable.");
+			}
 			model.addAttribute("lecture", new Lecture());
 			List<Lecture> listLectures = this.lectureService.listLectures();
 			model.addAttribute("listLectures", listLectures);
-			List<User> users = userService.listUsers();
+			List<User> users = userService.listUsersByRoleFacultyAndHOD();
 			Map<Integer,String> faculties = new HashMap<Integer,String>();
-			for (int i = 1; i < users.size(); i++) {
+			for (int i = 0; i < users.size(); i++) {
 				
 				    	faculties.put(users.get(i).getId(), users.get(i).getUsername());
 			
@@ -115,15 +109,25 @@ public class HODController{
 			model.addAttribute("subjectList", subjectList);
 			return "hod/lecture";
 		}
-	
 		
-		//For removing a user
-		@RequestMapping(value= "/remove/{student_id}")
-		public String removeStudent(@PathVariable("student_id") int id){
+		//List TimeTables
+		@RequestMapping(value = "/timetables", method = RequestMethod.GET)
+		public String listTimeTables(Model model) {
+			model.addAttribute("timetable", new TimeTable());
+			List<TimeTable> listTimeTables = this.timeTableService.listTimeTables();
+			model.addAttribute("listTimeTables", listTimeTables);
+			List<Lecture> lectures = lectureService.listLectures();
+			model.addAttribute("lectureList", lectures);
+			return "hod/timetable";
+		}
+		
+		//For removing a timetable
+		@RequestMapping(value= "/remove/timetable/{timetable_id}")
+		public String removeTimeTable(@PathVariable("timetable_id") int id){
 	
-				this.studentService.removeStudent(id);
+				this.timeTableService.removeTimeTable(id);
 			
-			return "redirect:/HOD/students";
+			return "redirect:/HOD/timetables";
 			
 		}
 		
@@ -131,44 +135,75 @@ public class HODController{
 		@RequestMapping(value= "/remove/lecture/{lecture_id}")
 		public String removeLecture(@PathVariable("lecture_id") int id){
 	
-				this.lectureService.removeLecture(id);
+				try{
+					this.lectureService.removeLecture(id);
+				}
+				catch(org.springframework.dao.DataIntegrityViolationException e)
+				{
+					return "redirect:/HOD/lectures?error";
+				}
+			
+			return "redirect:/HOD/lectures";
+			
+		}
+
+		//For editing a lecture - display page with Model value
+		@RequestMapping(value= "/edit/lecture/{lecture_id}")
+		public String editLecture(@PathVariable("lecture_id") int id, Model model){
+	
+				Lecture l = this.lectureService.getLectureById(id);
+				model.addAttribute("lecture", l);
+				List<User> users = userService.listUsers();
+				Map<Integer,String> faculties = new HashMap<Integer,String>();
+				for (int i = 1; i < users.size(); i++) {
+					
+					    	faculties.put(users.get(i).getId(), users.get(i).getUsername());
+				
+				}
+				
+				List<Subject> subjectList = subjectService.listSubjects();
+				model.addAttribute("facultyList", faculties);
+				model.addAttribute("subjectList", subjectList);
+			return "hod/lecture_update";
+			
+		}
+		
+		//For updating a lecture
+		@RequestMapping(value= "/updateLecture", method = RequestMethod.POST)
+		public String updateLecture(@ModelAttribute("lecture") Lecture l){
+				
+				Subject s = subjectService.getSubjectById(l.getSubjectId());
+				l.setSubject(s);
+				User u = userService.getUserById(l.getUserId());
+				l.setUser(u);
+				this.lectureService.updateLecture(l);
 			
 			return "redirect:/HOD/lectures";
 			
 		}
 		
-		//For editing a student - display page with Model value
-		@RequestMapping(value= "/edit/{student_id}")
-		public String editStudent(@PathVariable("student_id") int id, Model model){
+		//For editing a timetable - display page with Model value
+		@RequestMapping(value= "/edit/timetable/{timetable_id}")
+		public String editTimeTable(@PathVariable("timetable_id") int id, Model model){
 	
-				Student s = this.studentService.getStudentById(id);
-				model.addAttribute("student", s);
+				TimeTable tt = this.timeTableService.getTimeTableById(id);
+				model.addAttribute("timetable", tt);
+				List<Lecture> lectures = lectureService.listLectures();
+				model.addAttribute("lectureList", lectures);
 			
-			return "hod/student_update";
+			return "hod/timetable_update";
 			
 		}
 		
 		//For updating a student
-		@RequestMapping(value= "/updateStudent", method = RequestMethod.POST)
-		public String updateStudent(@ModelAttribute("student") Student s){
-	
-				this.studentService.updateStudent(s);
+		@RequestMapping(value= "/updateTimeTable", method = RequestMethod.POST)
+		public String updateTimeTable(@ModelAttribute("timetable") TimeTable tt){
+				
+				Lecture l = lectureService.getLectureById(tt.getLectureId());
+				tt.setLecture(l);
+				this.timeTableService.updateTimeTable(tt);
 			
-			return "redirect:/HOD/students";
+			return "redirect:/HOD/timetables";
 			
-		}
-		
-		// List of Departments for view
-		@ModelAttribute("departmentList") 
-		private Map<Integer,String> populateDefaultModel() {
-			 
-	
-			Map<Integer,String> departments = new HashMap<Integer,String>();
-			for (int i = 1; i <= 5; i++) {
-				Department department = this.departmentService.getDepartmentById(i);
-				departments.put(department.getId(), department.getName());
-			}
-			return departments;
-	
-		}		
+		}	
 }

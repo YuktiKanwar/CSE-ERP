@@ -1,59 +1,54 @@
 package spring.service;
 
 import java.util.List;
-import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import spring.dao.LectureDao;
 import spring.dao.TimeTableDao;
-import spring.dao.UserRoleDao;
-import spring.model.Lecture;
 import spring.model.TimeTable;
-import spring.model.UserRole;
 
-@Service("lectureService")
-public class LectureServiceImpl implements LectureService {
-	@Autowired
-	private LectureDao lectureDao;
+@Service("timeTableService")
+public class TimeTableServiceImpl implements TimeTableService {
+
 	@Autowired
 	private TimeTableDao timeTableDao;
 	
 	@Override
 	@Transactional
-	public void addLecture(Lecture l) {
+	public void addTimeTable(TimeTable tt) {
 		// TODO Auto-generated method stub
-		this.lectureDao.addLecture(l);
+		this.timeTableDao.addTimeTable(tt);
+
 	}
 
 	@Override
 	@Transactional
-	public void updateLecture(Lecture l) {
+	public void updateTimeTable(TimeTable tt) {
 		// TODO Auto-generated method stub
-		this.lectureDao.updateLecture(l);
+		this.timeTableDao.updateTimeTable(tt);
 	}
 
 	@Override
 	@Transactional
-	public List<Lecture> listLectures() {
+	public List<TimeTable> listTimeTables() {
 		// TODO Auto-generated method stub
-		return this.lectureDao.listLectures();
+		return this.timeTableDao.listTimeTables();
 	}
 
 	@Override
 	@Transactional
-	public Lecture getLectureById(int id) {
+	public TimeTable getTimeTableById(int id) {
 		// TODO Auto-generated method stub
-		return this.lectureDao.getLectureById(id);
+		return this.timeTableDao.getTimeTableById(id);
 	}
 
 	@Override
 	@Transactional
-	public void removeLecture(int id) {
+	public void removeTimeTable(int id) {
 		// TODO Auto-generated method stub
-		this.lectureDao.removeLecture(id);
+		this.timeTableDao.removeTimeTable(id);
 	}
 
 }

@@ -12,5 +12,6 @@ public interface UserCRUDService {
 	public User getUserByUserName(String username);
 	public User getUserById(int id);
 	public void removeUser(String username);
+	public List<User> listUsersByRoleFacultyAndHOD();
 	
 }

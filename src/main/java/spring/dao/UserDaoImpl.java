@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import spring.model.User;
+import spring.model.UserRole;
 
 @Repository
 public class UserDaoImpl implements UserDao {
@@ -51,6 +52,20 @@ public class UserDaoImpl implements UserDao {
 	public List<User> listUsers() {
 		Session session = this.sessionFactory.getCurrentSession();
 		List<User> UsersList = session.createQuery("from User").list();
+		return UsersList;
+	}
+	
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<User> listUsersByRoleFacultyAndHOD() {
+		Session session = this.sessionFactory.getCurrentSession();
+		List<UserRole> UserRolesList = session.createQuery("from UserRole where role = 'ROLE_FACULTY' or role = 'ROLE_HOD'").list();
+		List<User> UsersList = new ArrayList<User>();
+		for(int i = 0; i < UserRolesList.size(); i++)
+		{
+			UsersList.add(UserRolesList.get(i).getUser());
+		}
+		
 		return UsersList;
 	}
 

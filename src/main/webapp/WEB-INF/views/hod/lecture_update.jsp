@@ -5,7 +5,7 @@
 <%@ page import="java.util.*" %>
 <html>
 <head>
-	<title>Student Page</title>
+	<title>Lecture_Update Page</title>
 	<style>
 	.dataTables_filter {
 		display: none; 
@@ -14,10 +14,19 @@
 </head>
 <body>
 <div class="container">
-	<h2>Add a Lecture</h2>
+	<h2>Update a Lecture</h2>
 	
-	<c:url var="addAction" value="/HOD/addLecture" ></c:url>
-	<form:form action="${addAction}" modelAttribute="lecture" class="form-horizontal">
+	<c:url var="updateAction" value="/HOD/updateLecture" ></c:url>
+	<form:form action="${updateAction}" modelAttribute="lecture" class="form-horizontal">
+			<div class="form-group">
+		    	<form:label class="control-label col-sm-2" path="id">
+					<spring:message text="ID"/>
+				</form:label>
+		      <div class="col-sm-4">
+				<form:input path="id" readonly="true" size="8"  disabled="true" class="form-control"  />
+				<form:hidden path="id" />
+		      </div>
+		    </div>
 	        <div class="form-group">
 	        	<form:label class="control-label col-sm-2" path="userId">
 					<spring:message text="Faculty"/>
@@ -62,75 +71,19 @@
 		    </div>
 		    <div class="form-group">
 		      <div class="col-sm-offset-2 col-sm-10">
-		        <input type="submit" class="btn btn-default" value="<spring:message text="Add Lecture"/>" />
+		        <input type="submit" class="btn btn-default" value="<spring:message text="Update Lecture"/>" />
 		      </div>
 		    </div>
 	</form:form>
-	<br>
-	<h3>Lectures List</h3>
-	<c:if test="${!empty listLectures}">
-		<table class="tg row-border hover" id="lectures_list">
-			<thead>
-				<tr>
-					<th width="80">Faculty</th>
-					<th width="120">Subject</th>
-					<th width="120">Semester</th>
-					<th width="120">Department</th>
-					<th></th>
-					<th></th>
-				</tr>
-			</thead>
-			<tfoot>
-				<tr>
-					<th width="80">Faculty</th>
-					<th width="120">Subject</th>
-					<th width="120">Semester</th>
-					<th width="120">Department</th>
-					<th></th>
-					<th></th>
-				</tr>
-			</tfoot>
-			<c:forEach items="${listLectures}" var="lecture">
-			<tr>
-				<td>${lecture.user.username}</td>
-				<td>${lecture.subject.name}</td>
-				<td>${lecture.subject.semester}</td>
-				<td>${lecture.subject.department.name}</td>
-				<td><a href="<c:url value='edit/lecture/${lecture.id}' />" >Edit</a></td>
-				<td><a href="<c:url value='remove/lecture/${lecture.id}' />" >Delete</a></td>
-			</tr>
-		</c:forEach>
-		</table>
-	</c:if>
+	
 </div>
 	<script type="text/javascript">
-	$(document).ready(function() {
-		if("${error}" != "" )
-			alert("${error}");
-		
+	$(document).ready(function() {		
 		$('#subjects').hide();
 	    var table = $('#lectures_list').DataTable({
 	    	
 	    });
 	    
-	    // Setup - add a text input to each footer cell
-	    $('#lectures_list tfoot th').each( function () {
-	        var title = $(this).text();
-	        $(this).html( '<input type="text" placeholder="'+title+'" style="width:120px" />' );
-	    } );
-	    
-	    // Apply the search
-	    table.columns().every( function () {
-	        var that = this;
-	 
-	        $( 'input', this.footer() ).on( 'keyup change', function () {
-	            if ( that.search() !== this.value ) {
-	                that
-	                    .search( this.value )
-	                    .draw();
-	            }
-	        } );
-	    });
 	
 	    // Display subjects based on semester
 	    $('#semester').on('change',function(){

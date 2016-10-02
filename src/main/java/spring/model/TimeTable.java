@@ -12,15 +12,18 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 @Entity
-@Table(name = "timetable")
+@Table(name = "timetables")
 public class TimeTable{
 
 	private int id;
-	private Lecture lecture;
 	private String day;
 	private int time;
+	private Lecture lecture = new Lecture();
+	@Transient
+	private int lectureId;
 	
 	public TimeTable() {
 	}
@@ -33,7 +36,7 @@ public class TimeTable{
 	}
 	
 	@Id
-	@SequenceGenerator(name="seq-gen",sequenceName="timetable_id_seq", initialValue=100)
+	@SequenceGenerator(name="seq-gen",sequenceName="timetables_id_seq", initialValue=100)
 	@GeneratedValue(strategy = GenerationType.SEQUENCE,generator="seq-gen")
 	@Column(name = "id", unique= true, nullable= false)
 	public int getId(){
@@ -74,4 +77,13 @@ public class TimeTable{
 		public void setTime(int time) {
 			this.time = time;
 		}
+		
+	public void setLectureId(int id) {
+		this.lectureId = id;
+	}
+	
+	@Transient
+	public int getLectureId() {
+		return this.lectureId;
+	}
 }

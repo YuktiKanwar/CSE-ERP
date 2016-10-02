@@ -30,6 +30,12 @@ public class UserCRUDServiceImpl implements UserCRUDService {
 	public void updateUser(User p) {
 		this.userDao.updateUser(p);
 	}
+	
+	@Override
+	@Transactional
+	public List<User> listUsersByRoleFacultyAndHOD(){
+		return this.userDao.listUsersByRoleFacultyAndHOD();
+	}
 
 	@Override
 	@Transactional
