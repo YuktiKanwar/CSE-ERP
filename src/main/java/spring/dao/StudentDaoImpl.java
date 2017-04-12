@@ -7,6 +7,7 @@ import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import spring.model.Lecture;
 import spring.model.Student;
 import spring.model.User;
 
@@ -48,6 +49,13 @@ public class StudentDaoImpl implements StudentDao {
 			Session session = this.sessionFactory.getCurrentSession();		
 			Student s = (Student) session.load(Student.class, new String(rollNo));
 			return s;
+		}
+		
+		@Override
+		public List<Student> getStudentByDepartmentId(int deptId){
+			Session session = this.sessionFactory.getCurrentSession();		
+			List<Student> StudentsList = session.createQuery("from Student where department_id="+deptId).list();
+			return StudentsList;
 		}
 
 		@Override

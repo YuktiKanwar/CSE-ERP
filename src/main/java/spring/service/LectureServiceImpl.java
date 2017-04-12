@@ -41,12 +41,20 @@ public class LectureServiceImpl implements LectureService {
 		// TODO Auto-generated method stub
 		return this.lectureDao.listLectures();
 	}
+	
 
 	@Override
 	@Transactional
 	public Lecture getLectureById(int id) {
 		// TODO Auto-generated method stub
 		return this.lectureDao.getLectureById(id);
+	}
+	
+	@Override
+	@Transactional
+	public List<Lecture> getLectureByFacultyId(int facultyId) {
+		// TODO Auto-generated method stub
+		return this.lectureDao.getLectureByFacultyId(facultyId);
 	}
 
 	@Override

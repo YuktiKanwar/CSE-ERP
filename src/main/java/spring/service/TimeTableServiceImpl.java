@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import spring.dao.TimeTableDao;
+import spring.model.Lecture;
 import spring.model.TimeTable;
 
 @Service("timeTableService")
@@ -37,6 +38,13 @@ public class TimeTableServiceImpl implements TimeTableService {
 		return this.timeTableDao.listTimeTables();
 	}
 
+	@Override
+	@Transactional
+	public List<TimeTable> getTimeTableByLectureId(int facultyId) {
+		// TODO Auto-generated method stub
+		return this.timeTableDao.getTimeTableByLectureId(facultyId);
+	}
+	
 	@Override
 	@Transactional
 	public TimeTable getTimeTableById(int id) {

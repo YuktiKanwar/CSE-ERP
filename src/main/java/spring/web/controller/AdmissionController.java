@@ -40,14 +40,16 @@ public class AdmissionController{
 	
 	//For adding a student
 	@RequestMapping(value= "/addStudent", method = RequestMethod.POST)
-	public String addUser(@ModelAttribute("student") Student s){
+	public String addUser(@ModelAttribute("student") Student s, Model model){
 
 			Department d = departmentService.getDepartmentById(s.getDepartmentId());
 			s.setDepartment(d);
 			this.studentService.addStudent(s);
-			
-		
-		return "redirect:/Admission/students";
+			List<Student> listStudents = this.studentService.listStudents();
+			model.addAttribute("student", new Student());
+			model.addAttribute("status", "addStudent");
+			model.addAttribute("listStudents", listStudents);
+			return "admission/student";
 		
 	}
 	
@@ -64,8 +66,7 @@ public class AdmissionController{
 	@RequestMapping(value= "/remove/{student_id}")
 	public String removeStudent(@PathVariable("student_id") int id){
 
-			this.studentService.removeStudent(id);
-		
+		this.studentService.removeStudent(id);
 		return "redirect:/Admission/students";
 		
 	}
@@ -98,7 +99,7 @@ public class AdmissionController{
 		 
 
 		Map<Integer,String> departments = new HashMap<Integer,String>();
-		for (int i = 1; i <= 5; i++) {
+		for (int i = 1; i <= 6; i++) {
 			Department department = this.departmentService.getDepartmentById(i);
 			departments.put(department.getId(), department.getName());
 		}

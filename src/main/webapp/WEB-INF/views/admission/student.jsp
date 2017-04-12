@@ -13,7 +13,7 @@
 	</style>
 </head>
 <body>
-<div class="container">
+<div class="container-fluid">
 	<h2>Add a Student</h2>
 	<c:url var="addAction" value="/Admission/addStudent" ></c:url>
 	<form:form action="${addAction}" modelAttribute="student" class="form-horizontal">
@@ -80,14 +80,14 @@
 		    </div>
 		    <div class="form-group">
 		      <div class="col-sm-offset-2 col-sm-10">
-		        <input type="submit" class="btn btn-default" value="<spring:message text="Add Student"/>" />
+		        <input type="submit" id="addstudent" class="btn btn-default" value="<spring:message text="Add Student"/>" />
 		      </div>
 		    </div>
 	</form:form>
 	<br>
 	<h3>Students List</h3>
 	<c:if test="${!empty listStudents}">
-		<table class="tg row-border hover" id="student_list">
+		<table class="mdl-data-table row-border hover" id="student_list">
 			<thead>
 				<tr>
 					<th width="80">FirstName</th>
@@ -151,6 +151,21 @@
 	            }
 	        } );
 	    });
+	    
+	    if('${status}' == 'removeStudent'){
+	    	setTimeout(
+	    			  function() 
+	    			  {
+	    				  $.notify('Student Removed', 'warn');
+	    			  }, 2000);
+	    }
+	    if('${status}' == 'addStudent'){
+	    	setTimeout(
+	    			  function() 
+	    			  {
+	    				  $.notify('Student Added', 'success');
+	    			  }, 2000);
+	    }
 	    
 	} );
 	</script>

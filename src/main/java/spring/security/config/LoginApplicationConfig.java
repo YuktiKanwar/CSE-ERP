@@ -50,7 +50,7 @@ public class LoginApplicationConfig extends WebMvcConfigurerAdapter{
 	    ds.setDriverClassName("org.postgresql.Driver");
 	ds.setUrl("jdbc:postgresql://localhost:5432/erp");
 	ds.setUsername("postgres");
-	ds.setPassword("postgres");
+	ds.setPassword("root");
 	return ds;
 	}
 	

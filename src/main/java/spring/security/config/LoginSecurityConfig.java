@@ -58,7 +58,7 @@ public class LoginSecurityConfig extends WebSecurityConfigurerAdapter {
 		.exceptionHandling().accessDeniedPage("/403");
 	
 		http.authorizeRequests()
-		.antMatchers("/Faculty/*").access("hasRole('ROLE_FACULTY')")
+		.antMatchers("/Faculty/*").access("hasAnyRole('ROLE_FACULTY','ROLE_HOD')")
 		.and()
 		.exceptionHandling().accessDeniedPage("/403");
 		

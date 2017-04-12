@@ -9,5 +9,6 @@ public interface LectureService{
 	public void updateLecture(Lecture l);
 	public List<Lecture> listLectures();
 	public Lecture getLectureById(int id);
+	public List<Lecture> getLectureByFacultyId(int facultyId);
 	public void removeLecture(int id);
 }

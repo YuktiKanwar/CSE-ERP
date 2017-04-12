@@ -5,7 +5,7 @@
 <%@ page import="java.util.*" %>
 <html>
 <head>
-	<title>Student Page</title>
+	<title>HOD Page</title>
 	<style>
 	.dataTables_filter {
 		display: none; 
@@ -146,6 +146,21 @@
 	    			}
 	    		}
 	    });
+	    
+	    if('${status}' == 'removeLecture'){
+	    	setTimeout(
+	    			  function() 
+	    			  {
+	    				  $.notify('Lecture Removed', 'warn');
+	    			  }, 2000);
+	    }
+	    if('${status}' == 'addLecture'){
+	    	setTimeout(
+	    			  function() 
+	    			  {
+	    				  $.notify('Lecture Added', 'success');
+	    			  }, 2000);
+	    }
 	} );
 	</script>
 </body>

@@ -7,6 +7,7 @@ import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import spring.model.Lecture;
 import spring.model.TimeTable;
 
 @Repository
@@ -43,6 +44,14 @@ public class TimeTableDaoImpl implements TimeTableDao {
 		Session session = this.sessionFactory.getCurrentSession();		
 		TimeTable tt = (TimeTable) session.load(TimeTable.class, new Integer(id));
 		return tt;
+	}
+	
+	@Override
+	public List<TimeTable> getTimeTableByLectureId(int facultyId) {
+		// TODO Auto-generated method stub
+		Session session = this.sessionFactory.getCurrentSession();	
+		List<TimeTable> TimeTablesList = session.createQuery("from TimeTable where lecture_id="+facultyId).list();
+		return TimeTablesList;
 	}
 
 	@Override

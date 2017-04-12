@@ -50,6 +50,12 @@ public class StudentServiceImpl implements StudentService {
 		// TODO Auto-generated method stub
 		return this.studentDao.getStudentByRollNo(rollNo);
 	}
+	
+	@Override
+	@Transactional
+	public List<Student> getStudentByDepartmentId(int deptId){
+		return this.studentDao.getStudentByDepartmentId(deptId);
+	}
 
 	@Override
 	@Transactional

@@ -10,9 +10,15 @@
 	background-color: rgb(174, 146, 113) !important;
 	border-color: rgb(174, 146, 113) !important;
 }
-
+.navbar{
+	height: 69px !important;
+}
 img.logo{
 	width: 50%;
+}
+
+.img-responsive{
+	border-radius:10%;
 }
 
 ul.nav li a:hover{
@@ -22,4 +28,43 @@ ul.nav li a:hover{
 
 img.img-responsive{
 	height: 300px !important;
+}
+
+html, body {
+   height: 100%;
+}
+.parallax1{
+	background: transparent url(../images/erp3.jpg) repeat;
+	background-size: cover;
+	background-attachment: fixed;
+	min-height: 400px;
+	
+}
+.parallax2{
+	background: transparent url(../images/erp5.jpg) repeat;
+	background-size: cover;
+	background-attachment: fixed;
+	min-height: 500px;
+}
+.parallax3{
+	background: transparent url(../images/erp6.jpg) repeat;
+	background-size: cover;
+	background-attachment: fixed;
+	min-height: 500px;
+	color: white;
+	text-align: center;
+	font-size: 52px;
+	font-weight: 600;
+	
+}
+.welcomeERP{
+	color: rgb(104, 78, 48); font-family: 'Raleway',sans-serif; 
+	font-size: 52px; font-weight: 600; 
+	line-height: 72px; margin-top: -20px; 
+	text-align: center;; 
+}
+
+.domain-heading{
+	font-weight: 700px;
+	color:rgb(104, 78, 48);
 }

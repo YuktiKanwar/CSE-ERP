@@ -44,6 +44,14 @@ public class LectureDaoImpl implements LectureDao {
 		Lecture l = (Lecture) session.load(Lecture.class, new Integer(id));
 		return l;
 	}
+	
+	@Override
+	public List<Lecture> getLectureByFacultyId(int facultyId) {
+		// TODO Auto-generated method stub
+		Session session = this.sessionFactory.getCurrentSession();	
+		List<Lecture> LecturesList = session.createQuery("from Lecture where user_id="+facultyId).list();
+		return LecturesList;
+	}
 
 	@Override
 	public void removeLecture(int id) {

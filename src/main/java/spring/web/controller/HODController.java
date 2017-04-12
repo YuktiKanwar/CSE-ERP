@@ -52,22 +52,19 @@ public class HODController{
 	SubjectService subjectService;
 	
 	@RequestMapping(value = { "/index"}, method = RequestMethod.GET)
-	public ModelAndView welcomePage() {
-		ModelAndView model = new ModelAndView();
-		model.setViewName("hod/index");
-		return model;
+	public String welcomePage() {
+		return "hod/index";
 	}
 		
 	//For adding a timetable
 	@RequestMapping(value= "/addTimeTable", method = RequestMethod.POST)
 	public String addTimeTable(@ModelAttribute("timetable")  TimeTable tt){
 
-			Lecture l = lectureService.getLectureById(tt.getLectureId());
-			tt.setLecture(l);
-			this.timeTableService.addTimeTable(tt);
-			
+		Lecture l = lectureService.getLectureById(tt.getLectureId());
+		tt.setLecture(l);
+		this.timeTableService.addTimeTable(tt);
 		
-		return "redirect:/HOD/timetables";
+	return "redirect:/HOD/timetables";
 		
 	}
 	
@@ -75,13 +72,11 @@ public class HODController{
 	@RequestMapping(value= "/addLecture", method = RequestMethod.POST)
 	public String addLecture(@ModelAttribute("lecture") Lecture l){
 
-			Subject s = subjectService.getSubjectById(l.getSubjectId());
-			l.setSubject(s);
-			User u = userService.getUserById(l.getUserId());
-			l.setUser(u);
-			this.lectureService.addLecture(l);
-			
-		
+		Subject s = subjectService.getSubjectById(l.getSubjectId());
+		l.setSubject(s);
+		User u = userService.getUserById(l.getUserId());
+		l.setUser(u);
+		this.lectureService.addLecture(l);
 		return "redirect:/HOD/lectures";
 		
 	}
@@ -126,8 +121,7 @@ public class HODController{
 		public String removeTimeTable(@PathVariable("timetable_id") int id){
 	
 				this.timeTableService.removeTimeTable(id);
-			
-			return "redirect:/HOD/timetables";
+				return "redirect:/HOD/timetables";
 			
 		}
 		
@@ -135,15 +129,15 @@ public class HODController{
 		@RequestMapping(value= "/remove/lecture/{lecture_id}")
 		public String removeLecture(@PathVariable("lecture_id") int id){
 	
-				try{
-					this.lectureService.removeLecture(id);
-				}
-				catch(org.springframework.dao.DataIntegrityViolationException e)
-				{
-					return "redirect:/HOD/lectures?error";
-				}
-			
-			return "redirect:/HOD/lectures";
+			try{
+				this.lectureService.removeLecture(id);
+			}
+			catch(org.springframework.dao.DataIntegrityViolationException e)
+			{
+				return "redirect:/HOD/lectures?error";
+			}
+		
+		return "redirect:/HOD/lectures";
 			
 		}
 
@@ -195,7 +189,7 @@ public class HODController{
 			
 		}
 		
-		//For updating a student
+		//For updating a timetable
 		@RequestMapping(value= "/updateTimeTable", method = RequestMethod.POST)
 		public String updateTimeTable(@ModelAttribute("timetable") TimeTable tt){
 				

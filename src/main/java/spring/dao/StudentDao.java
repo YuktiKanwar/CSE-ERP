@@ -12,4 +12,5 @@ public interface StudentDao {
 	public Student getStudentById(int id);
 	public Student getStudentByRollNo(String rollNo);
 	public void removeStudent(int id);
+	public List<Student> getStudentByDepartmentId(int deptId);
 }

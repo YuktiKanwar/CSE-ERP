@@ -2,6 +2,7 @@ package spring.dao;
 
 import java.util.List;
 
+import spring.model.Lecture;
 import spring.model.TimeTable;
 
 public interface TimeTableDao {
@@ -10,4 +11,5 @@ public interface TimeTableDao {
 	public List<TimeTable> listTimeTables();
 	public TimeTable getTimeTableById(int id);
 	public void removeTimeTable(int id);
+	public List<TimeTable> getTimeTableByLectureId(int facultyId);
 }

@@ -172,6 +172,20 @@
 	    			}
 	    		}
 	    });
+	    if('${status}' == 'removeTimeTable'){
+	    	setTimeout(
+	    			  function() 
+	    			  {
+	    				  $.notify('TimeTable Removed', 'warn');
+	    			  }, 2000);
+	    }
+	    if('${status}' == 'addTimeTable'){
+	    	setTimeout(
+	    			  function() 
+	    			  {
+	    				  $.notify('TimeTable Added', 'success');
+	    			  }, 2000);
+	    }
 	} );
 	</script>
 </body>
