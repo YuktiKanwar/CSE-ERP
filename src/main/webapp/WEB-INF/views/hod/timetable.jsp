@@ -14,6 +14,12 @@
 </head>
 <body>
 <div class="container">
+	<c:if test="${error.length() > 0}">
+		<div class="alert alert-warning">
+		    <a href="#" class="close" data-dismiss="alert">&times;</a>
+		    <strong>Warning!</strong> There was a conflict with the timetable entry.
+		</div>
+	</c:if>
 	<h2>Add a TimeTable</h2>
 	
 	<c:url var="addAction" value="/HOD/addTimeTable" ></c:url>

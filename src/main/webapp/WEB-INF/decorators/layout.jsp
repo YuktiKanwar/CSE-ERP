@@ -32,7 +32,7 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>
-          <a href="#" class="navbar-left"><img class="logo" src="${pageContext.request.contextPath}/resources/images/logo.png"></a>
+          <a href="#" class="navbar-brand"><img class="logo img" src="${pageContext.request.contextPath}/resources/images/logo.png"></a>
         </div>
         <c:if test="${pageContext.request.userPrincipal.name == null}">
 	        <div id="navbar" class="navbar-collapse collapse">
@@ -100,6 +100,9 @@
 					</security:authorize>
 					<security:authorize access="hasRole('ROLE_ADMISSION')">
 					<li><a href="${pageContext.request.contextPath}/Admission/index">Index</a></li>
+					</security:authorize>
+					<security:authorize access="hasRole('ROLE_ACCOUNT')">
+					<li><a href="${pageContext.request.contextPath}/Accounts/index">Index</a></li>
 					</security:authorize>
 					</li>
 					

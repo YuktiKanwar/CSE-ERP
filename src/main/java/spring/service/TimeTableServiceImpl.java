@@ -44,6 +44,11 @@ public class TimeTableServiceImpl implements TimeTableService {
 		// TODO Auto-generated method stub
 		return this.timeTableDao.getTimeTableByLectureId(facultyId);
 	}
+	@Override
+	@Transactional
+	public List<TimeTable> getTimeTableByDayAndTime(String day,int time){
+		return this.timeTableDao.getTimeTableByDayAndTime(day,time);
+	}
 	
 	@Override
 	@Transactional

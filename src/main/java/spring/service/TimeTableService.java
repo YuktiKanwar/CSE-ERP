@@ -12,4 +12,5 @@ public interface TimeTableService{
 	public TimeTable getTimeTableById(int id);
 	public List<TimeTable> getTimeTableByLectureId(int facultyId);
 	public void removeTimeTable(int id);
+	public List<TimeTable> getTimeTableByDayAndTime(String day,int time);
 }

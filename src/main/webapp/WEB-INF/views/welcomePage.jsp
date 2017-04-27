@@ -28,8 +28,8 @@
 	<div id="da-slider" class="da-slider animated bounceIn slowest">
 	
 		<div class="da-slide">
-			<h2>Some headline</h2>
-			<p>Some description</p>
+			<h2>Why ERP?</h2>
+			<p>It's time you get rid of the legacy software and start using modern ERP to make your life easier.</p>
 			<a href="#" class="da-link">Read more</a>
 			<div class="da-img">
 				<img src="${pageContext.request.contextPath}/resources/images/erp2.png" class="sliderImage" style="height:310px;" alt="image01" />
@@ -37,8 +37,8 @@
 		</div>
 		
 		<div class="da-slide">
-			<h2>Some headline</h2>
-			<p>Some description</p>
+			<h2>Our ERP</h2>
+			<p></p>
 			<a href="#" class="da-link">Read more</a>
 			<div class="da-img">
 				<img src="${pageContext.request.contextPath}/resources/images/erp4.png" class="sliderImage" style="height:310px;" alt="image01" />

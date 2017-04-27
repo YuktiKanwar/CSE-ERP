@@ -62,8 +62,14 @@ public class HODController{
 
 		Lecture l = lectureService.getLectureById(tt.getLectureId());
 		tt.setLecture(l);
-		this.timeTableService.addTimeTable(tt);
-		
+		int time = tt.getTime();
+		List<TimeTable> timetables = this.timeTableService.getTimeTableByDayAndTime(tt.getDay(), time);
+		if(timetables.size() > 0 ){
+			return "redirect:/HOD/timetables/error";
+		}
+		else{
+			this.timeTableService.addTimeTable(tt);
+		}
 	return "redirect:/HOD/timetables";
 		
 	}
@@ -113,6 +119,18 @@ public class HODController{
 			model.addAttribute("listTimeTables", listTimeTables);
 			List<Lecture> lectures = lectureService.listLectures();
 			model.addAttribute("lectureList", lectures);
+			return "hod/timetable";
+		}
+		
+		//List TimeTables - error
+		@RequestMapping(value = "/timetables/error", method = RequestMethod.GET)
+		public String listTimeTablesError(Model model) {
+			model.addAttribute("timetable", new TimeTable());
+			List<TimeTable> listTimeTables = this.timeTableService.listTimeTables();
+			model.addAttribute("listTimeTables", listTimeTables);
+			List<Lecture> lectures = lectureService.listLectures();
+			model.addAttribute("lectureList", lectures);
+			model.addAttribute("error", "error");
 			return "hod/timetable";
 		}
 		

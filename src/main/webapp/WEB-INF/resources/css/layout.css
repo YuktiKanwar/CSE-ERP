@@ -14,7 +14,7 @@
 	height: 69px !important;
 }
 img.logo{
-	width: 50%;
+	width: 70%;
 }
 
 .img-responsive{
@@ -32,6 +32,7 @@ img.img-responsive{
 
 html, body {
    height: 100%;
+   background-color:rgb(251, 246, 242) !important;
 }
 .parallax1{
 	background: transparent url(../images/erp3.jpg) repeat;

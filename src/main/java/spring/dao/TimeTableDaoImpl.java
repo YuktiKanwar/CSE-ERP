@@ -53,6 +53,13 @@ public class TimeTableDaoImpl implements TimeTableDao {
 		List<TimeTable> TimeTablesList = session.createQuery("from TimeTable where lecture_id="+facultyId).list();
 		return TimeTablesList;
 	}
+	@Override
+	public List<TimeTable> getTimeTableByDayAndTime(String day, int time){
+		// TODO Auto-generated method stub
+				Session session = this.sessionFactory.getCurrentSession();	
+				List<TimeTable> TimeTablesList = session.createQuery("from TimeTable where day='"+day+"' and time="+time).list();
+				return TimeTablesList;
+	}
 
 	@Override
 	public void removeTimeTable(int id) {

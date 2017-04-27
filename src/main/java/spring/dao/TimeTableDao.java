@@ -12,4 +12,5 @@ public interface TimeTableDao {
 	public TimeTable getTimeTableById(int id);
 	public void removeTimeTable(int id);
 	public List<TimeTable> getTimeTableByLectureId(int facultyId);
+	public List<TimeTable> getTimeTableByDayAndTime(String day,int time);
 }

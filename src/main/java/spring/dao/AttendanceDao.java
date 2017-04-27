@@ -3,6 +3,7 @@ package spring.dao;
 import java.util.Date;
 import java.util.List;
 
+import spring.model.Account;
 import spring.model.Attendance;
 
 public interface AttendanceDao {

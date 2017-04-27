@@ -19,12 +19,16 @@
 <body>
 <div class="container">
 	<br>
-	<div class="col-md-4">
+	<div class="col-md-12">
 		<h3>Mark Attendance</h3>
-		<h4>Faculty : ${facultyName}</h4>
-		<h4>Date : ${date}</h4>
-	<br/>
 	</div>
+	<div class="col-md-3">
+		<p>Faculty : ${facultyName}</p>
+	</div>
+	<div class="col-md-3">
+		<p>Date : ${date}</p>
+	</div>
+	<br/>
 	<c:if test="${!empty listStudents}">
 		<table class="tg row-border hover" id="timetable_list">
 			<thead>
