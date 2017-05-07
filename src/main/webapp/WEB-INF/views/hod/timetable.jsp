@@ -5,7 +5,7 @@
 <%@ page import="java.util.*" %>
 <html>
 <head>
-	<title>Student Page</title>
+	<title>HOD Page</title>
 	<style>
 	.dataTables_filter {
 		display: none; 

@@ -28,6 +28,12 @@
 	<div class="col-md-3">
 		<p>Date : ${date}</p>
 	</div>
+	<div class="col-md-3">
+		<p >Present : <span id="present">${present}</span></p>
+	</div>
+	<div class="col-md-3">
+		<p >Absent : <span id="absent">${absent}</span></p>
+	</div>	
 	<br/>
 	<c:if test="${!empty listStudents}">
 		<table class="tg row-border hover" id="timetable_list">
@@ -52,7 +58,7 @@
 					<td>${student.firstName}</td>
 					<td>${student.semester}</td>
 					<td>${student.rollNo}</td>
-					<td>
+					<td class="attendance_chooser">
 						<c:choose>
 							<c:when  test="${listAttendance == []}">
 								P<input onclick="saveAttendance(${timetable_id},${student.id},'P')" value="P" type="radio" name="attendance${student.id}"/>
@@ -64,12 +70,12 @@
 									<c:if test="${attendance.student_id == student.id}">
 										<c:set var="flag" value="1"/>
 										<c:if test="${attendance.value == 'A'}">
-											P<input onclick="saveAttendance(${timetable_id},${student.id},'P')" value="P" type="radio" name="attendance${student.id}"/>
-											A<input onclick="saveAttendance(${timetable_id},${student.id},'A')" value="A" type="radio" checked='true' name="attendance${student.id}"/>
+											P<input onclick="saveAttendance(${timetable_id},${student.id},'P','checked')" value="P" type="radio" name="attendance${student.id}"/>
+											A<input onclick="saveAttendance(${timetable_id},${student.id},'A','checked')" value="A" type="radio" checked='true' name="attendance${student.id}"/>
 										</c:if>
 										<c:if test="${attendance.value == 'P'}">
-											P<input onclick="saveAttendance(${timetable_id},${student.id},'P')" value="P" type="radio" checked='true' name="attendance${student.id}"/>
-											A<input onclick="saveAttendance(${timetable_id},${student.id},'A')" value="A" type="radio" name="attendance${student.id}"/>
+											P<input onclick="saveAttendance(${timetable_id},${student.id},'P','checked')" value="P" type="radio" checked='true' name="attendance${student.id}"/>
+											A<input onclick="saveAttendance(${timetable_id},${student.id},'A','checked')" value="A" type="radio" name="attendance${student.id}"/>
 										</c:if>
 									</c:if>
 								</c:forEach>
@@ -90,14 +96,45 @@
 	<script type="text/javascript">
 	var token = $('#csrfToken').val();
 	var header = $('#csrfHeader').val();
-	function saveAttendance(timetable_id,student_id,AorP){
+	function saveAttendance(timetable_id,student_id,AorP,checked){
+		debugger;
+		if(checked == 'checked'){
+			if(AorP == 'P'){
+				var presentNo = $('#present').text();
+				var newPresentNo = parseInt(presentNo) + 1;
+				$('#present').text(newPresentNo);
+				var absentNo = $('#absent').text();
+				var newAbsentNo = parseInt(absentNo) - 1;
+				$('#absent').text(newAbsentNo);
+			}
+			else{
+				var presentNo = $('#present').text();
+				var newPresentNo = parseInt(presentNo) - 1;
+				$('#present').text(newPresentNo);
+				var absentNo = $('#absent').text();
+				var newAbsentNo = parseInt(absentNo) + 1;
+				$('#absent').text(newAbsentNo);
+			}
+		}
+		else{
+			if(AorP == 'P'){
+				var presentNo = $('#present').text();
+				var newPresentNo = parseInt(presentNo) + 1;
+				$('#present').text(newPresentNo);
+			}
+			else{
+				var absentNo = $('#absent').text();
+				var newAbsentNo = parseInt(absentNo) + 1;
+				$('#absent').text(newAbsentNo);
+			}
+		}
+
 		var date = '${date}';
 		var params = "timetable_id="+timetable_id+"&student_id="+student_id+"&date="+date+"&value="+AorP;
 		httpGetAsync('http://localhost:8080/ERPApp/Faculty/attendance/save/',
 				params,
 				function(res){
 					$('[name=attendance'+res+']').each(function(){
-						debugger
 						if(this.value == 'P' && this.checked == true)
 							$(this).parent().css({'background-color' : 'rgba(81, 255, 81, 0.32)'})
 						else if(this.value == 'A' && this.checked == true)

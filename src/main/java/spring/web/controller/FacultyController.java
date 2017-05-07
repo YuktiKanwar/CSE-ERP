@@ -1,5 +1,6 @@
 package spring.web.controller;
 
+import java.lang.reflect.Array;
 import java.security.Principal;
 import java.text.DateFormat;
 import java.text.ParseException;
@@ -147,14 +148,80 @@ public class FacultyController{
 				finalStudents.add(student);
 			}
 		});
-		List<Attendance> attendance = this.attendanceService.listAttendancesByDateAndTimeTable(DateStringForDAO, timetable_id);
+		List<Integer> present = new ArrayList<Integer>();
+		List<Integer> absent = new ArrayList<Integer>();
+		List<Attendance> attendances = this.attendanceService.listAttendancesByDateAndTimeTable(DateStringForDAO, timetable_id);
+		attendances.forEach((attendance) -> {
+			int i = 1;
+			String val = attendance.getValue();
+			char value = val.toLowerCase().charAt(0);
+			if( value == 'p'){
+				present.add(i);
+			}
+			else{
+				absent.add(i);	
+			}
+		});
+		
+		model.addAttribute("present", present.size());
+		model.addAttribute("absent", absent.size());
 		model.addAttribute("listStudents", finalStudents);
-		model.addAttribute("listAttendance", attendance);
+		model.addAttribute("listAttendance", attendances);
 		model.addAttribute("timetable_id", timetable_id);
 		model.addAttribute("facultyName", facultyName);
 		model.addAttribute("date", date);
+		
 		return "faculty/attendance_mark";
 	}
+	
+	
+	//Mark Attendance from HOD
+		@SuppressWarnings("null")
+		@RequestMapping(value = "/attendance/mark/{timetable_id}/{date}/{facultyName}")
+		public String markAttendancefromHOD(Model model,Principal user, @PathVariable("timetable_id") int timetable_id, @PathVariable("date") String date, @PathVariable("facultyName") String facultyName) {
+
+			String DateString = date.replace('-', '/');
+			String[] dateStrings = DateString.split("/");
+			String DateStringForDAO = dateStrings[2] + '/' + dateStrings[1] + '/' + dateStrings[0];
+			TimeTable t = this.timeTableService.getTimeTableById(timetable_id);
+			Lecture l = t.getLecture();
+			Subject s = l.getSubject();
+			Department d =s.getDepartment();
+			List<Student> students = this.studentService.getStudentByDepartmentId(d.getId());
+			List<Student> finalStudents = new ArrayList<Student>();
+			students.forEach((student) ->{
+				if(student.getSemester() == s.getSemester()){
+					finalStudents.add(student);
+				}
+			});
+			List<Integer> present = new ArrayList<Integer>();
+			List<Integer> absent = new ArrayList<Integer>();
+			List<Attendance> attendances = this.attendanceService.listAttendancesByDateAndTimeTable(DateStringForDAO, timetable_id);
+			attendances.forEach((attendance) -> {
+				int i = 1;
+				String val = attendance.getValue();
+				char value = val.toLowerCase().charAt(0);
+				if( value == 'p'){
+					present.add(i);
+				}
+				else{
+					absent.add(i);	
+				}
+			});
+			
+			model.addAttribute("present", present.size());
+			model.addAttribute("absent", absent.size());
+			model.addAttribute("listStudents", finalStudents);
+			model.addAttribute("listAttendance", attendances);
+			model.addAttribute("timetable_id", timetable_id);
+			model.addAttribute("facultyName", facultyName);
+			model.addAttribute("date", date);
+			
+			return "faculty/attendance_mark";
+		}
+	
+	
+	
 	
 	//Save Attendance
 	@SuppressWarnings("null")

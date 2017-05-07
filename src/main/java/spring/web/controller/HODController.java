@@ -1,5 +1,7 @@
 package spring.web.controller;
 
+import java.security.Principal;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -217,5 +219,40 @@ public class HODController{
 			
 			return "redirect:/HOD/timetables";
 			
-		}	
+		}
+		
+		
+		
+		
+		
+		//List Faculties
+		@RequestMapping(value = "/faculty/list", method = RequestMethod.GET)
+		public String listFaculties(Model model) {
+			List<User> users = userService.listUsersByRoleFacultyAndHOD();
+			model.addAttribute("facultyList", users);
+			return "hod/listfaculty";
+		}
+		
+		
+		//List Attendance of Faculty
+		@SuppressWarnings("null")
+		@RequestMapping(value = "/faculty/{faculty_name}", method = RequestMethod.GET)
+		public String listAttendanceFaculty(Model model,Principal user, @RequestParam(value = "error",required = false) String error, @PathVariable("faculty_name") String facultyName) {
+			if(error != null)
+			{
+				model.addAttribute("error", "This lecture is being used in timetable.");
+			}
+			User u = this.userService.getUserByUserName(facultyName);
+			List<Lecture> listLectures = this.lectureService.getLectureByFacultyId(u.getId());
+			List<TimeTable> listTimeTables = new ArrayList<TimeTable>(); 
+			listLectures.forEach((lecture)-> {
+				List<TimeTable> timetables = this.timeTableService.getTimeTableByLectureId(lecture.getId());
+				timetables.forEach((timetable)->{
+					listTimeTables.add(timetable);
+				});
+			});
+			model.addAttribute("listTimeTables", listTimeTables);
+			model.addAttribute("facultyName", facultyName);
+			return "hod/attendance_select";
+		}
 }

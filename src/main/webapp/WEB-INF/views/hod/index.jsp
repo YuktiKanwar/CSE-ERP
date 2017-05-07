@@ -13,4 +13,11 @@
 		<br/>
 		<a href="${pageContext.request.contextPath}/HOD/timetables"><button class='btn btn-lg btn-primary'>Manage TimeTable</button></a>
 	</div>
+	<div class="col-md-1">
+	</div>
+	<div class="col-md-3">
+		<img src="/ERPApp/resources/images/attendance3.png" class="img img-responsive"/>
+		<br/>
+		<a href="${pageContext.request.contextPath}/HOD/faculty/list"><button class='btn btn-lg btn-primary'>View Attendance</button></a>
+	</div>
 </div>
